@@ -76,7 +76,7 @@ function App() {
       {/* Header */}
       <header className="header animate-fade-in">
         <div className="header-title">
-          <h1>Mutual Funds Intelligence - Adarsh</h1>
+          <h1>Mutual Funds Intelligence</h1>
           <p>Real-time analytics and performance monitoring</p>
         </div>
         <div className="header-actions">
