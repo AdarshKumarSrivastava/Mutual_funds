@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar
 } from 'recharts';
 import {
-  TrendingUp, Activity, PieChart, Users, Download, Filter, ChevronUp
+  TrendingUp, Activity, PieChart, Users, Download, ChevronUp
 } from 'lucide-react';
 import './App.css';
 
