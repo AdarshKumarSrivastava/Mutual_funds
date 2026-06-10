@@ -1,0 +1,15 @@
+# Ignore database files
+*.db
+*.sqlite3
+
+# Ignore python caches
+__pycache__/
+*.pyc
+
+# Ignore processed data if needed, but keeping for now
+# data/processed/
+
+# Ignore virtual environments
+.venv/
+venv/
+env/
