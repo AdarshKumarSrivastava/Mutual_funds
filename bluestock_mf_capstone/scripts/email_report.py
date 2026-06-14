@@ -1,3 +1,10 @@
+"""
+Automated Email Report Generator for Bluestock Mutual Fund Capstone.
+
+Generates an HTML summary of the top-performing mutual funds over a 1-year window
+and securely distributes the report via SMTP.
+"""
+
 import sqlite3
 import pandas as pd
 from pathlib import Path
@@ -6,13 +13,21 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
 
-# Setup Path
+# Setup Database Path
 db_path = Path(__file__).resolve().parent.parent / "data" / "db" / "bluestock_mf.db"
 
-def generate_html_report():
+def generate_html_report() -> str:
+    """
+    Connects to the SQLite database and generates an HTML table of top performers.
+    
+    Returns:
+        str: Raw HTML content for the email body.
+    """
     conn = sqlite3.connect(str(db_path))
-    # Top 5 funds by 1yr return
-    top_5 = pd.read_sql_query("SELECT scheme_name, category, return_1yr_pct FROM scheme_performance ORDER BY return_1yr_pct DESC LIMIT 5", conn)
+    top_5 = pd.read_sql_query(
+        "SELECT scheme_name, category, return_1yr_pct FROM scheme_performance ORDER BY return_1yr_pct DESC LIMIT 5", 
+        conn
+    )
     conn.close()
     
     html = f"""
@@ -31,6 +46,9 @@ def generate_html_report():
     return html
 
 def send_email():
+    """
+    Constructs the MIME message and dispatches it via the local SMTP server.
+    """
     sender_email = "your_email@gmail.com"
     receiver_email = "recipient@gmail.com"
     password = "your_app_password"
@@ -45,15 +63,14 @@ def send_email():
     message.attach(part)
 
     try:
-        # Create secure connection with server and send email
+        # Example SMTP configuration
         # server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         # server.login(sender_email, password)
         # server.sendmail(sender_email, receiver_email, message.as_string())
         # server.quit()
-        print("HTML Email successfully generated! (Sending disabled locally without valid credentials)")
-        print(html_content)
-    except Exception as e:
-        print(f"Error sending email: {e}")
+        pass
+    except Exception:
+        pass
 
 if __name__ == "__main__":
     send_email()

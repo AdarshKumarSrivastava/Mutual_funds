@@ -1,47 +1,57 @@
-# Bluestock Mutual Fund Capstone Project
+# Bluestock Mutual Fund Capstone 📈
 
-This repository contains the end-to-end data pipeline, analytics, and dashboard for the Bluestock Mutual Fund Capstone project.
+Welcome to the Bluestock Mutual Fund Analytics Capstone Project. This project is an end-to-end data engineering, analytics, and visualization solution designed to extract insights from Indian mutual fund data (focusing on AUM, SIP trends, fund performance, and investor demographics).
 
-## Project Structure
+## 🎯 Project Overview
+Our primary objective is to ingest fragmented raw data, construct a reliable data pipeline, perform deep-dive exploratory and statistical analytics, and visualize the findings via an interactive dashboard.
 
-- `data/`
-  - `raw/`: Original CSV files and live fetched NAV datasets.
-  - `processed/`: Cleaned CSV files ready for database ingestion.
-  - `db/`: SQLite database `bluestock_mf.db`.
-- `scripts/`
-  - `etl_pipeline.py`: Pipeline for data extraction, cleaning (forward-filling weekends/holidays for NAV), and loading into `processed/`.
-  - `load_db.py`: Ingests processed CSVs into the SQLite database.
-  - `live_nav_fetch.py`: Scheduled job (Cron / Schedule library) for fetching live NAV from `mfapi.in` at 8 PM weekdays.
-  - `email_report.py`: Automated HTML email reporting script.
-- `notebooks/`: Jupyter Notebooks covering Data Ingestion, Data Cleaning, EDA, Performance Analytics (CAGR, Sharpe, VaR), and Advanced Analytics (Cohort, Markowitz Efficient Frontier, Monte Carlo).
-- `dashboard/`: Streamlit Web App (`app.py`) featuring 4 interactive pages with slicers.
-- `sql/`: Contains `schema.sql` and example `queries.sql`.
-- `reports/`: Final presentation and project reports.
+### Key Deliverables:
+1. **ETL Pipeline**: Automated extraction and cleaning (handling weekends/holidays with ffill) of mutual fund CSVs.
+2. **SQLite Database Warehouse**: Relational schema hosting all standardized metrics.
+3. **Advanced Analytics**: Statistical risk metrics (CAGR, Sharpe, Beta, VaR, Markowitz Efficient Frontier) developed in Jupyter Notebooks.
+4. **Live NAV Fetching**: Background Python job seamlessly pulling live data from `mfapi.in`.
+5. **Interactive Dashboard**: A robust multi-page application built on Streamlit showcasing Industry Overview, Fund Performance, Investor Analytics, and SIP Market Trends.
+6. **Executive Reports**: Comprehensive 15-20 page PDF report and a 12-slide presentation summarizing the architecture and EDA findings.
 
-## Setup Instructions
+## 🚀 Setup & Execution
 
-1. **Install dependencies**:
-   ```bash
-   pip install pandas numpy requests streamlit schedule
-   ```
+### 1. Requirements
+Ensure you have Python 3.9+ installed. The environment requires standard data science libraries:
+```bash
+pip install pandas numpy sqlite3 streamlit requests schedule matplotlib seaborn python-pptx fpdf2
+```
 
-2. **Run the ETL Pipeline**:
-   ```bash
-   python scripts/etl_pipeline.py
-   ```
+### 2. Master Execution
+We have provided a master script that sequentially runs the ETL pipeline, initializes the SQLite database, and runs the analytics generation.
+```bash
+# Ensure you are in the bluestock_mf_capstone directory
+python run_pipeline.py
+```
 
-3. **Initialize the Database**:
-   ```bash
-   python scripts/load_db.py
-   ```
+### 3. Launching the Dashboard
+Once the pipeline has populated the SQLite warehouse, you can launch the interactive Streamlit dashboard:
+```bash
+python -m streamlit run dashboard/app.py
+```
+*(The dashboard runs on `http://localhost:8501`)*
 
-4. **Launch the Dashboard**:
-   ```bash
-   streamlit run dashboard/app.py
-   ```
+### 4. Background NAV Updates
+To keep the NAV dataset updated in real-time, run the live fetcher in the background. It is programmed to pull data at 8 PM on weekdays:
+```bash
+python scripts/live_nav_fetch.py
+```
 
-## Bonus Features
-- **B1**: Live NAV fetching schedule implemented in `live_nav_fetch.py`.
-- **B2**: Streamlit Web App serving as a dynamic, interactive dashboard with filters on every page.
-- **B3 & B4**: Monte Carlo NAV projection & Markowitz Optimization included in `notebooks/05_advanced_analytics.ipynb`.
-- **B5**: Automated Weekly HTML email report in `scripts/email_report.py`.
+## 📁 Repository Structure
+- `/data/raw/` - The source dataset CSVs
+- `/data/processed/` - Cleaned output from the ETL process
+- `/data/db/` - Contains the `bluestock_mf.db` SQLite database
+- `/scripts/` - Pipeline scripts (`etl_pipeline.py`, `load_db.py`, etc.)
+- `/dashboard/` - Contains the Streamlit app `app.py`
+- `/notebooks/` - Analytics notebooks (VaR, Markowitz, EDA)
+- `/reports/` - The final PDF report and PPTX presentation
+
+## 📊 Published Dashboard
+(Optional) This dashboard is ready to be published to Streamlit Community Cloud or Azure App Services with minimal configuration by pointing the host to the `dashboard/app.py` entrypoint.
+
+---
+*Developed as part of the Bluestock Data Analytics Capstone.*

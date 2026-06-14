@@ -1,3 +1,10 @@
+"""
+Bluestock Mutual Fund Capstone Dashboard.
+
+A Streamlit-powered interactive dashboard providing insights on 
+industry AUM, fund performance, investor analytics, and SIP trends.
+"""
+
 import streamlit as st
 import sqlite3
 import pandas as pd
