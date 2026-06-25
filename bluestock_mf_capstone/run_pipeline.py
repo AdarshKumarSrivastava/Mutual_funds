@@ -18,9 +18,9 @@ def run_script(script_path: Path):
     print(f"[{'='*40}]\n")
     try:
         subprocess.run([sys.executable, str(script_path)], check=True)
-        print(f"✅ {script_path.name} completed successfully.")
+        print(f"[SUCCESS] {script_path.name} completed successfully.")
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error running {script_path.name}: {e}")
+        print(f"[ERROR] Error running {script_path.name}: {e}")
         sys.exit(1)
 
 def main():
@@ -40,7 +40,7 @@ def main():
             
         run_script(script)
         
-    print("\n🎉 Full pipeline execution completed successfully!")
+    print("\n[DONE] Full pipeline execution completed successfully!")
     print("You can now launch the dashboard by running:")
     print("python -m streamlit run dashboard/app.py")
 
